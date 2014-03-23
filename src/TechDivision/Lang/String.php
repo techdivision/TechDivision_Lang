@@ -78,6 +78,8 @@ class String extends Object
      * instance.
      *
      * @param mixed $value The value to initialize the instance with
+     * 
+     * @return \TechDivision\Lang\String The initialized instance
      */
     protected function init($value)
     {
@@ -322,7 +324,7 @@ class String extends Object
      * This method implements the abstract method from
      * <code>Serializable::unserialize($serialized)</code>.
      *
-     * @param string $serialized  Holds the serialized object as a string
+     * @param string $serialized Holds the serialized object as a string
      * 
      * @return void
      * @see \Serializable::unserialize($serialized)
@@ -447,4 +449,3 @@ class String extends Object
         return $this->init(strtolower($this->stringValue()));
     }
 }
-

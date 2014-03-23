@@ -37,7 +37,7 @@ namespace TechDivision\Lang;
  * @link http://www.techdivision.com
  * @license GPL
  */
-class BooleanTest extends PHPUnit_Framework_TestCase
+class BooleanTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -48,7 +48,7 @@ class BooleanTest extends PHPUnit_Framework_TestCase
 	public function testGetClass()
 	{
 		// check for the correct class name
-		$this->assertEquals('Boolean', Boolean::__getClass());
+		$this->assertEquals('TechDivision\Lang\Boolean', Boolean::__getClass());
 	}
 
 	/**
@@ -214,7 +214,7 @@ class BooleanTest extends PHPUnit_Framework_TestCase
 	public function testConstructorWithClassCastException()
 	{
 	    // set the expected exception
-	    $this->setExpectedException('ClassCastException');
+	    $this->setExpectedException('\TechDivision\Lang\ClassCastException');
 	    // try to initialize a new Boolean instance
 	    $boolean = new Boolean('xxx');
 	}

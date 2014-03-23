@@ -37,7 +37,7 @@ namespace TechDivision\Lang;
  * @link http://www.techdivision.com
  * @license GPL
  */
-class StringTest extends PHPUnit_Framework_TestCase
+class StringTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -47,7 +47,7 @@ class StringTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testGetClass()
 	{
-		$this->assertEquals('String', String::__getClass());
+		$this->assertEquals('TechDivision\Lang\String', String::__getClass());
 	}
 
 	/**

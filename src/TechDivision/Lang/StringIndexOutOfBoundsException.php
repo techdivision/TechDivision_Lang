@@ -33,7 +33,7 @@ namespace TechDivision\Lang;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/TechDivision_Lang
  */
-class StringIndexOutOfBoundsException extends Exception
+class StringIndexOutOfBoundsException extends \Exception
 {
 
     /**

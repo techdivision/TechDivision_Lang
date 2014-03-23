@@ -35,6 +35,6 @@ namespace TechDivision\Lang;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/TechDivision_Lang
  */
-class ClassCastException extends Exception
+class ClassCastException extends \Exception
 {
 }

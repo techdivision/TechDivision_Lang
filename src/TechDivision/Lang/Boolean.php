@@ -92,6 +92,8 @@ class Boolean extends Object
      * represents the primitive boolean argument.
      *
      * @param boolean $value The value to be represented by the Boolean.
+     * 
+     * @return void
      * @throws \TechDivision\Lang\ClassCastException The passed value is not a valid boolean representation
      */
     public function __construct($value)
@@ -132,17 +134,18 @@ class Boolean extends Object
      * returned object is initialized with the primitive value TRUE else
      * with FALSE.
      *
-     * @param \TechDivision\Lang\String Holds the String object to get the Boolean representation for
+     * @param \TechDivision\Lang\String $string Holds the String object to get the Boolean representation for
+     * 
      * @return \TechDivision\Lang\Boolean The Boolean object representing the specified String.
      */
     public static function valueOf(String $string)
     {
         // if the passed value is "true" or "1" then return a new Boolean
         // object initialized with true
-        if ($string->equals(new String("1")) || 
-            $string->equals(new String("true")) || 
-            $string->equals(new String("yes")) || 
-            $string->equals(new String("on")) || 
+        if ($string->equals(new String("1")) ||
+            $string->equals(new String("true")) ||
+            $string->equals(new String("yes")) ||
+            $string->equals(new String("on")) ||
             $string->equals(new String("y"))) {
             return new Boolean(true);
         }
@@ -151,8 +154,12 @@ class Boolean extends Object
     }
 
     /**
-     * (non-PHPdoc)
+     * This method checks if the passed object is equal
+     * to itself.
+     *
+     * @param \TechDivision\Lang\Object $obj The object to check
      * 
+     * @return boolean Returns TRUE if the passed object is equal
      * @see \TechDivision\Lang\Object::equals()
      */
     public function equals(Object $obj)
@@ -171,8 +178,10 @@ class Boolean extends Object
     }
 
     /**
-     * (non-PHPdoc)
-     * 
+     * This method returns the class as
+     * a string representation.
+     *
+     * @return string The objects string representation
      * @see \TechDivision\Lang\Object::__toString()
      */
     public function __toString()
