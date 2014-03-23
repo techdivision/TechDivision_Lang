@@ -37,7 +37,7 @@ namespace TechDivision\Lang;
  * @link http://www.techdivision.com
  * @license GPL
  */
-class FloatTest extends PHPUnit_Framework_TestCase
+class FloatTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -48,7 +48,7 @@ class FloatTest extends PHPUnit_Framework_TestCase
 	public function testGetClass()
 	{
 		// check for the correct class name
-		$this->assertEquals('Float', Float::__getClass());
+		$this->assertEquals('TechDivision\Lang\Float', Float::__getClass());
 	}
 
 	/**
@@ -126,9 +126,7 @@ class FloatTest extends PHPUnit_Framework_TestCase
 	public function testValueOfWithNumberFormatException()
 	{
 	    // set the expected exception
-	    $this->setExpectedException(
-	    	'Exceptions_NumberFormatException'
-	    );
+	    $this->setExpectedException('\TechDivision\Lang\NumberFormatException');
 	    // initialize a new Float instance
 	    $int = Float::valueOf(
 	        new String('!17')
@@ -158,7 +156,7 @@ class FloatTest extends PHPUnit_Framework_TestCase
 	public function testParseFloatWithNumberFormaException()
 	{
 	    // set the expected exception
-	    $this->setExpectedException('NumberFormatException');
+	    $this->setExpectedException('\TechDivision\Lang\NumberFormatException');
 	    // initialize a new Float instance
 	    $float = Float::parseFloat(new String('!17'));
 	}

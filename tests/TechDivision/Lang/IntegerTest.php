@@ -37,7 +37,7 @@ namespace TechDivision\Lang;
  * @link http://www.techdivision.com
  * @license GPL
  */
-class IntegerTest extends PHPUnit_Framework_TestCase
+class IntegerTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -48,7 +48,7 @@ class IntegerTest extends PHPUnit_Framework_TestCase
 	public function testGetClass()
 	{
 		// check for the correct class name
-		$this->assertEquals('Integer', Integer::__getClass());
+		$this->assertEquals('TechDivision\Lang\Integer', Integer::__getClass());
 	}
 
 	/**
@@ -124,7 +124,7 @@ class IntegerTest extends PHPUnit_Framework_TestCase
 	public function testValueOfWithNumberFormatException()
 	{
 	    // set the expected exception
-	    $this->setExpectedException('NumberFormatException');
+	    $this->setExpectedException('\TechDivision\Lang\NumberFormatException');
 	    // initialize a new Integer instance
 	    $int = Integer::valueOf(new String('!17'));
 	}
@@ -150,7 +150,7 @@ class IntegerTest extends PHPUnit_Framework_TestCase
 	public function testParseIntegerWithNumberFormaException()
 	{
 	    // set the expected exception
-	    $this->setExpectedException('NumberFormatException');
+	    $this->setExpectedException('\TechDivision\Lang\NumberFormatException');
 	    // initialize a new Integer instance
 	    $int = Integer::parseInteger(new String('!17'));
 	}

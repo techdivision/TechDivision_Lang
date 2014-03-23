@@ -38,7 +38,7 @@ abstract class Object
      * This method returns the class as
      * a string representation.
      *
-     * @return string
+     * @return string The objects string representation
      */
     public function __toString()
     {

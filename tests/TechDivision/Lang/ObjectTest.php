@@ -37,7 +37,7 @@ namespace TechDivision\Lang;
  * @link http://www.techdivision.com
  * @license GPL
  */
-class ObjectTest extends PHPUnit_Framework_TestCase
+class ObjectTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -48,7 +48,7 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testGetClass()
 	{
-		$this->assertInstanceOf('\TechDivision\Lang\Object',  Object::__getClass());
+		$this->assertEquals('TechDivision\Lang\Object',  Object::__getClass());
 	}
 
 	/**
@@ -59,8 +59,8 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testEqualFails()
 	{
-		$object1 = $this->getMock('\TechDivision\Lang\Object');
-		$object2 = $this->getMock('\TechDivision\Lang\Object');
+		$object1 = $this->getMockForAbstractClass('\TechDivision\Lang\Object');
+		$object2 = $this->getMockForAbstractClass('\TechDivision\Lang\Object');
 		$this->assertFalse($object1->equals($object2));
 	}
 
@@ -72,7 +72,7 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testEqualSuccess()
 	{
-		$object1 = $this->getMock('\TechDivision\Lang\Object');
+		$object1 = $this->getMockForAbstractClass('\TechDivision\Lang\Object');
 		$this->assertTrue($object1->equals($object1));
 	}
 
@@ -84,7 +84,7 @@ class ObjectTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToString()
 	{
-		$object = $this->getMock('\TechDivision\Lang\Object');
-		$this->assertEquals(Object::__getClass() . '@'. sha1(serialize($object)), $object->__toString());
+		$object = $this->getMockForAbstractClass('\TechDivision\Lang\Object');
+		$this->assertEquals(get_class($object) . '@'. sha1(serialize($object)), $object->__toString());
 	}
 }

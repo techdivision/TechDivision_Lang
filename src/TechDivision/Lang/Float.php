@@ -50,7 +50,7 @@ class Float extends Number
      */
     public function __construct($value)
     {
-        if (!isFloat($value)) {
+        if (!is_float($value)) {
             NumberFormatException::forInputString($value);
         }
         $this->value = $value;
@@ -157,7 +157,10 @@ class Float extends Number
     }
 
     /**
+     * Returns the value of the specified number as a <code>float</code>.
+     * This may involve rounding.
      *
+     * @return float The numeric value represented by this object after conversion to type <code>float</code>
      * @see \TechDivision\Lang\Number::floatValue()
      */
     public function floatValue()
@@ -166,7 +169,10 @@ class Float extends Number
     }
 
     /**
+     * Returns the value of the specified number as an <code>int</code>.
+     * This may involve rounding or truncation.
      *
+     * @return integer The numeric value represented by this object after conversion to type <code>int</code>
      * @see \TechDivision\Lang\Number::intValue()
      */
     public function intValue()
@@ -175,7 +181,10 @@ class Float extends Number
     }
 
     /**
+     * Returns the value of the specified number as a <code>double</code>.
+     * This may involve rounding.
      *
+     * @return double The numeric value represented by this object after conversion to type <code>double</code>
      * @see \TechDivision\Lang\Number::doubleValue()
      */
     public function doubleValue()
@@ -194,8 +203,10 @@ class Float extends Number
     }
 
     /**
-     * (non-PHPdoc)
-     * 
+     * This method returns the class as
+     * a string representation.
+     *
+     * @return string The objects string representation
      * @see \TechDivision\Lang\Object::__toString()
      */
     public function __toString()

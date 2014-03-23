@@ -38,23 +38,23 @@ abstract class Number extends Object
      * Returns the value of the specified number as an <code>int</code>.
      * This may involve rounding or truncation.
      *
-     * @return integer The numeric value represented by this object after conversion to type <code>int</code>.
+     * @return integer The numeric value represented by this object after conversion to type <code>int</code>
      */
-    public abstract function intValue();
+    abstract public function intValue();
 
     /**
      * Returns the value of the specified number as a <code>float</code>.
      * This may involve rounding.
      *
-     * @return float The numeric value represented by this object after conversion to type <code>float</code>.
+     * @return float The numeric value represented by this object after conversion to type <code>float</code>
      */
-    public abstract function floatValue();
+    abstract public function floatValue();
 
     /**
      * Returns the value of the specified number as a <code>double</code>.
      * This may involve rounding.
      *
-     * @return double The numeric value represented by this object after conversion to type <code>double</code>.
+     * @return double The numeric value represented by this object after conversion to type <code>double</code>
      */
-    public abstract function doubleValue();
+     abstract public function doubleValue();
 }
