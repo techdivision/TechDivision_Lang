@@ -15,5 +15,10 @@
     },
     "autoload": {
         "psr-0": {"TechDivision": "src/"}
+    },
+    "config":{
+        "github-oauth":{
+            "github.com":"604a3b5943228e434a5b52c2ba3cf72286d30db9"
+        }
     }
 }
