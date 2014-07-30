@@ -84,11 +84,36 @@ $int->equals(Integer::valueOf(new String('17'))); // true
 
 ### Float
 
-Still to come!
+The example for using a `Float` shows you how to add to instances
+and print the float value
+
+```php
+// initialize a new Float instance
+$float = new Float(10.005);
+$float->add(new Float(10.105));
+        
+// check the value
+echo $float->floatValue() . PHP_EOL; // 20.11
+```
 
 ### String
 
-Still to come!
+To show you how you can use the `String` class we'll simple concatenate
+to instances
+
+```php
+// initialize a new String instance
+$string = new String('value to');
+		
+// check that String was successfully concatenated
+echo $string->concat(new String(' search')) . PHP_EOL; // 'value to search'
+```
+
+Yeah, this are really simple examples, and as i told you before in most cases
+i'll use that classes for simple things like type hints and so on.
+
+If you like to use that stuff also, feel free to implement your own types and
+send me a pull request :)
 
 # External Links
 
