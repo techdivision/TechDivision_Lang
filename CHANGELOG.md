@@ -1,3 +1,13 @@
+# Version 0.1.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* String, Integer, Float and Boolean class now implements \Serializable interface
+
 # Version 0.1.2
 
 ## Bugfixes

@@ -41,6 +41,23 @@ class StringTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
+	 * Checks the serialize/unserialize methods implemented
+	 * from the \Serializable interface.
+	 *
+	 * @return void
+	 */
+	public function testSerializeAndUnserialize()
+	{
+	    // initialize a String instance and clone it
+	    $stringOne = new String('aStringValue');
+	    $clonedOne = clone $stringOne;
+        // serialize/unserialize the String instance
+	    $stringOne->unserialize($stringOne->serialize());
+		// check that the two String instances are equal
+		$this->assertEquals($clonedOne, $stringOne);
+	}
+
+	/**
 	 * This test checks the resolved class name.
 	 *
 	 * @return void

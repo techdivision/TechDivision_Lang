@@ -41,6 +41,23 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
+	 * Checks the serialize/unserialize methods implemented
+	 * from the \Serializable interface.
+	 *
+	 * @return void
+	 */
+	public function testSerializeAndUnserialize()
+	{
+	    // initialize a Integer instance and clone it
+	    $integerOne = new Integer(17);
+	    $clonedOne = clone $integerOne;
+        // serialize/unserialize the Integer instance
+	    $integerOne->unserialize($integerOne->serialize());
+		// check that the two Integer instances are equal
+		$this->assertEquals($clonedOne, $integerOne);
+	}
+
+	/**
 	 * This test checks the resolved class name.
 	 *
 	 * @return void
@@ -239,10 +256,10 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
         // check the value
 	    $this->assertEquals(2, $remeinder->intValue());
 	}
-	
+
 	/**
 	 * This test checks the Integer's greaterThan() method.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function testGreaterThan()
@@ -251,7 +268,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
 		$this->assertFalse($int->greaterThan(new Integer(3)));
 		$this->assertTrue($int->greaterThan(new Integer(1)));
 	}
-	
+
 	/**
 	 * This test checks the Integer's greaterThanOrEqual() method.
 	 *
@@ -264,7 +281,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($int->greaterThanOrEqual(new Integer(2)));
 		$this->assertTrue($int->greaterThanOrEqual(new Integer(1)));
 	}
-	
+
 	/**
 	 * This test checks the Integer's lowerThan() method.
 	 *
@@ -276,7 +293,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($int->lowerThan(new Integer(3)));
 		$this->assertFalse($int->lowerThan(new Integer(1)));
 	}
-	
+
 	/**
 	 * This test checks the Integer's lowerThanOrEqual() method.
 	 *

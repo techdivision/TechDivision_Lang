@@ -37,14 +37,14 @@ class Boolean extends Object
 
     /**
      * The value of the Boolean.
-     * 
+     *
      * @var boolean
      */
     protected $value = false;
 
     /**
      * The accepted values for a Boolean object.
-     * 
+     *
      * @var array
      */
     protected $booleans = array(
@@ -92,7 +92,7 @@ class Boolean extends Object
      * represents the primitive boolean argument.
      *
      * @param boolean $value The value to be represented by the Boolean.
-     * 
+     *
      * @return void
      * @throws \TechDivision\Lang\ClassCastException The passed value is not a valid boolean representation
      */
@@ -135,7 +135,7 @@ class Boolean extends Object
      * with FALSE.
      *
      * @param \TechDivision\Lang\String $string Holds the String object to get the Boolean representation for
-     * 
+     *
      * @return \TechDivision\Lang\Boolean The Boolean object representing the specified String.
      */
     public static function valueOf(String $string)
@@ -158,7 +158,7 @@ class Boolean extends Object
      * to itself.
      *
      * @param \TechDivision\Lang\Object $obj The object to check
-     * 
+     *
      * @return boolean Returns TRUE if the passed object is equal
      * @see \TechDivision\Lang\Object::equals()
      */
@@ -192,5 +192,30 @@ class Boolean extends Object
         }
         // else return string 'false'
         return 'false';
+    }
+
+    /**
+     * This method has to be called to serialize the Boolean.
+     *
+     * @return string Returns a serialized version of the Boolean
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize($this->value);
+    }
+
+    /**
+     * This method unserializes the passed string and initializes the Boolean
+     * itself with the data.
+     *
+     * @param string $data Holds the data of the instance as serialized string
+     *
+     * @return void
+     * @see \Serializable::unserialize($data)
+     */
+    public function unserialize($data)
+    {
+        $this->value = unserialize($data);
     }
 }

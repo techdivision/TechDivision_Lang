@@ -32,26 +32,26 @@ namespace TechDivision\Lang;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/TechDivision_Lang
  */
-class String extends Object
+class String extends Object implements \Serializable
 {
 
     /**
      * Holds the chars the String contains of.
-     * 
+     *
      * @var array
      */
     protected $value = '';
 
     /**
      * The length of the String.
-     * 
+     *
      * @var integer
      */
     protected $length = 0;
 
     /**
      * The cached hash of the String itself.
-     * 
+     *
      * @var integer
      */
     protected $hash = 0;
@@ -65,7 +65,7 @@ class String extends Object
      * constructor is unnecessary since Strings are immutable.
      *
      * @param mixed $value Holds the value to initialize the String instance with
-     * 
+     *
      * @return void
      */
     public function __construct($value = null)
@@ -78,7 +78,7 @@ class String extends Object
      * instance.
      *
      * @param mixed $value The value to initialize the instance with
-     * 
+     *
      * @return \TechDivision\Lang\String The initialized instance
      */
     protected function init($value)
@@ -98,7 +98,7 @@ class String extends Object
      * and returns it.
      *
      * @param mixed $value The value to initialize the String with
-     * 
+     *
      * @return \TechDivision\Lang\String The initialized String instance
      */
     public static function valueOf($value)
@@ -143,7 +143,7 @@ class String extends Object
      * of the this string with the passed one.
      *
      * @param \TechDivision\Lang\String $string The String to concatenate
-     * 
+     *
      * @return \TechDivision\Lang\String The concatenated String
      */
     public function concat(String $string)
@@ -199,7 +199,7 @@ class String extends Object
      *
      * @param string $oldChar The old character
      * @param string $newChar The new character
-     * 
+     *
      * @return \TechDivision\Lang\String A string derived from this string by replacing every occurrence of <code>oldChar</code> with <code>newChar</code>
      */
     public function replace($oldChar, $newChar)
@@ -211,7 +211,7 @@ class String extends Object
      * Returns true if the passed value is equal.
      *
      * @param \TechDivision\Lang\Object $val The value to check
-     * 
+     *
      * @return boolean
      */
     public function equals(Object $val)
@@ -234,7 +234,7 @@ class String extends Object
      *
      * @param integer $beginIndex The beginning index, inclusive
      * @param integer $endIndex   The ending index, exclusive
-     * 
+     *
      * @return \TechDivision\Lang\String The specified substring
      * @exception \TechDivision\Lang\StringIndexOutOfBoundsException if the <code>beginIndex</code> is negative, or <code>endIndex</code> is larger than the length of this <code>String</code> object, or <code>beginIndex</code> is larger than <code>endIndex</code>.
      */
@@ -289,7 +289,7 @@ class String extends Object
      * given regular expression.
      *
      * @param string $regex The regular expression to which this string is to be matched
-     * 
+     *
      * @return boolean TRUE if, and only if, this string matches the given regular expression
      */
     public function matches($regex)
@@ -304,34 +304,28 @@ class String extends Object
     /**
      * This method has to be called to serialize the String.
      *
-     * This method implements the abstract method from
-     * <code>Serializable::serialize()</code>.
-     *
      * @return string Returns a serialized version of the String
      * @see \Serializable::serialize()
      */
     public function serialize()
     {
-        // serialize the object itself
-        return serialize($this);
+        return serialize(get_object_vars($this));
     }
 
     /**
-     * This method unserializes the passed string
-     * and initializes the String itself with the
-     * data.
+     * This method unserializes the passed string and initializes the String
+     * itself with the data.
      *
-     * This method implements the abstract method from
-     * <code>Serializable::unserialize($serialized)</code>.
+     * @param string $data Holds the data of the instance as serialized string
      *
-     * @param string $serialized Holds the serialized object as a string
-     * 
      * @return void
-     * @see \Serializable::unserialize($serialized)
+     * @see \Serializable::unserialize($data)
      */
-    public function unserialize($serialized)
+    public function unserialize($data)
     {
-        $this->init(unserialize($serialized)->stringValue());
+        foreach (unserialize($data) as $propertyName => $propertyValue) {
+            $this->$propertyName = $propertyValue;
+        }
     }
 
     /**
@@ -372,7 +366,7 @@ class String extends Object
      *
      * @param string  $regex The delimiting regular expression
      * @param integer $limit The result threshold, as described above
-     * 
+     *
      * @return array The array of strings computed by splitting this string around matches of the given regular expression
      */
     public function split($regex, $limit = -1)

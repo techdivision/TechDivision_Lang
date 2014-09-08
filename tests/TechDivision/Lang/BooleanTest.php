@@ -41,6 +41,23 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
+	 * Checks the serialize/unserialize methods implemented
+	 * from the \Serializable interface.
+	 *
+	 * @return void
+	 */
+	public function testSerializeAndUnserialize()
+	{
+	    // initialize a Boolean instance and clone it
+	    $booleanOne = new Boolean(true);
+	    $clonedOne = clone $booleanOne;
+        // serialize/unserialize the Boolean value
+	    $booleanOne->unserialize($booleanOne->serialize());
+		// check that the two Booleans are equal
+		$this->assertEquals($clonedOne, $booleanOne);
+	}
+
+	/**
 	 * This test checks the resolved class name.
 	 *
 	 * @return void

@@ -32,12 +32,12 @@ namespace TechDivision\Lang;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/TechDivision_Lang
  */
-class Float extends Number
+class Float extends Number implements \Serializable
 {
 
     /**
      * The value of the Float.
-     * 
+     *
      * @var float
      */
     protected $value = null;
@@ -125,8 +125,8 @@ class Float extends Number
      * <code>float</code>, <code>1.000000<b>1</b>f</code> results.
      *
      * @param \TechDivision\Lang\String $string The string to be parsed
-     * 
-     * @return \TechDivision\Lang\Float A <code>Float</code> object holding the value represented by the <code>String</code> argument        
+     *
+     * @return \TechDivision\Lang\Float A <code>Float</code> object holding the value represented by the <code>String</code> argument
      * @exception \TechDivision\Lang\NumberFormatException If the string does not contain a parsable number
      */
     public static function valueOf(String $string)
@@ -146,7 +146,7 @@ class Float extends Number
      * by the <code>valueOf</code> method of class <code>Float</code>.
      *
      * @param \TechDivision\Lang\String $string She string to be parsed
-     * 
+     *
      * @return float The <code>float</code> value represented by the string argument
      * @exception \TechDivision\Lang\NumberFormatException If the string does not contain a parsable <code>float</code>.
      * @see \TechDivision\Lang\Float::valueOf($string)
@@ -193,6 +193,31 @@ class Float extends Number
     }
 
     /**
+     * This method has to be called to serialize the Float.
+     *
+     * @return string Returns a serialized version of the Float
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize($this->value);
+    }
+
+    /**
+     * This method unserializes the passed string and initializes the Float
+     * itself with the data.
+     *
+     * @param string $data Holds the data of the instance as serialized string
+     *
+     * @return void
+     * @see \Serializable::unserialize($data)
+     */
+    public function unserialize($data)
+    {
+        $this->value = unserialize($data);
+    }
+
+    /**
      * This object as String returned.
      *
      * @return \TechDivision\Lang\String The value as String.
@@ -219,7 +244,7 @@ class Float extends Number
      * Returns true if the passed value is equal.
      *
      * @param \TechDivision\Lang\Object $val The value to check
-     * 
+     *
      * @return boolean
      */
     public function equals(Object $val)
@@ -234,7 +259,7 @@ class Float extends Number
      * Adds the value of the passed Float.
      *
      * @param \TechDivision\Lang\Float $toAdd The Float to add
-     * 
+     *
      * @return \TechDivision\Lang\Float The instance
      */
     public function add(Float $toAdd)
@@ -247,7 +272,7 @@ class Float extends Number
      * Subtracts the value of the passed Float.
      *
      * @param \TechDivision\Lang\Float $toSubtract The Float to subtract
-     * 
+     *
      * @return \TechDivision\Lang\Float The instance
      */
     public function subtract(Float $toSubtract)
@@ -260,7 +285,7 @@ class Float extends Number
      * Multiplies the Float with the passed one.
      *
      * @param \TechDivision\Lang\Float $toMultiply The Float to multiply
-     * 
+     *
      * @return \TechDivision\Lang\Float The instance
      */
     public function multiply(Float $toMultiply)
@@ -273,7 +298,7 @@ class Float extends Number
      * Divides the Float by the passed one.
      *
      * @param \TechDivision\Lang\Float $dividyBy The Float to dividy by
-     * 
+     *
      * @return \TechDivision\Lang\Float The instance
      */
     public function divide(Float $dividyBy)

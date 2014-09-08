@@ -32,12 +32,12 @@ namespace TechDivision\Lang;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/TechDivision_Lang
  */
-class Integer extends Number
+class Integer extends Number implements \Serializable
 {
 
     /**
      * The value of the Integer.
-     * 
+     *
      * @var integer
      */
     protected $value = null;
@@ -47,7 +47,7 @@ class Integer extends Number
      * represents the primitive <code>integer</code> argument.
      *
      * @param integer $value The value to be represented by the <code>Integer</code>.
-     * 
+     *
      * @return void
      * @throws \TechDivision\Lang\NumberFormatException Is thrown if the passed value is not an integer
      */
@@ -128,7 +128,7 @@ class Integer extends Number
      * <code>float</code>, <code>1.000000<b>1</b>f</code> results.
      *
      * @param \TechDivision\Lang\String $string The string to be parsed
-     * 
+     *
      * @return \TechDivision\Lang\Integer A <code>Integer</code> object holding the value represented by the <code>String</code> argument
      * @exception \TechDivision\Lang\NumberFormatException If the string does not contain a parsable number
      */
@@ -149,7 +149,7 @@ class Integer extends Number
      * by the <code>valueOf</code> method of class <code>Integer</code>.
      *
      * @param String $string The string to be parsed.
-     * 
+     *
      * @return \TechDivision\Lang\Integer The <code>Integer</code> value represented by the string argument.
      * @exception \TechDivision\Lang\NumberFormatException If the string does not contain a parsable <code>Integer</code>.
      * @see \TechDivision\Lang\Integer::valueOf($string)
@@ -196,6 +196,31 @@ class Integer extends Number
     }
 
     /**
+     * This method has to be called to serialize the Integer.
+     *
+     * @return string Returns a serialized version of the Integer
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize($this->value);
+    }
+
+    /**
+     * This method unserializes the passed string and initializes the Integer
+     * itself with the data.
+     *
+     * @param string $data Holds the data of the instance as serialized string
+     *
+     * @return void
+     * @see \Serializable::unserialize($data)
+     */
+    public function unserialize($data)
+    {
+        $this->value = unserialize($data);
+    }
+
+    /**
      * This object as String returned.
      *
      * @return \TechDivision\Lang\String The value as String.
@@ -222,7 +247,7 @@ class Integer extends Number
      * Returns true if the passed value is equal.
      *
      * @param \TechDivision\Lang\Object $val The value to check
-     * 
+     *
      * @return boolean
      */
     public function equals(Object $val)
@@ -237,7 +262,7 @@ class Integer extends Number
      * Adds the value of the passed Integer.
      *
      * @param \TechDivision\Lang\Integer $toAdd The Integer to add
-     * 
+     *
      * @return \TechDivision\Lang\Integer The instance
      */
     public function add(Integer $toAdd)
@@ -250,7 +275,7 @@ class Integer extends Number
      * Subtracts the value of the passed Integer.
      *
      * @param \TechDivision\Lang\Integer $toSubtract The integer to subtract
-     * 
+     *
      * @return \TechDivision\Lang\Integer The instance
      */
     public function subtract(Integer $toSubtract)
@@ -263,7 +288,7 @@ class Integer extends Number
      * Multiplies the Integer with the passed one.
      *
      * @param \TechDivision\Lang\Integer $toMultiply The Integer to multiply
-     * 
+     *
      * @return \TechDivision\Lang\Integer The instance
      */
     public function multiply(Integer $toMultiply)
@@ -280,7 +305,7 @@ class Integer extends Number
      * of!
      *
      * @param \TechDivision\Lang\Integer $dividyBy The Integer to dividy by
-     * 
+     *
      * @return \TechDivision\Lang\Integer The instance
      */
     public function divide(Integer $dividyBy)
@@ -305,8 +330,8 @@ class Integer extends Number
     /**
      * Returns TRUE if the object's value is greater than the passed one.
      *
-     * @param \TechDivision\Lang\Integer $val The value to test the object's value against 
-     * 
+     * @param \TechDivision\Lang\Integer $val The value to test the object's value against
+     *
      * @return boolean TRUE if the object's value is greater
      */
     public function greaterThan(Integer $val)
@@ -319,7 +344,7 @@ class Integer extends Number
      * the passed one.
      *
      * @param \TechDivision\Lang\Integer $val The value to test the object's value against
-     * 
+     *
      * @return boolean TRUE if the object's value is greater or equal
      */
     public function greaterThanOrEqual(Integer $val)
@@ -331,7 +356,7 @@ class Integer extends Number
      * Returns TRUE if the objects value is lower than the passed one.
      *
      * @param \TechDivision\Lang\Integer $val The value to test the object's value against
-     * 
+     *
      * @return boolean TRUE if the objects value is lower
      */
     public function lowerThan(Integer $val)
@@ -344,7 +369,7 @@ class Integer extends Number
      * the passed one.
      *
      * @param \TechDivision\Lang\Integer $val The value to test the objects value against
-     * 
+     *
      * @return boolean TRUE if the objects value is lower or equal
      */
     public function lowerThanOrEqual(Integer $val)
