@@ -41,6 +41,23 @@ class FloatTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
+	 * Checks the serialize/unserialize methods implemented
+	 * from the \Serializable interface.
+	 *
+	 * @return void
+	 */
+	public function testSerializeAndUnserialize()
+	{
+	    // initialize a Float instance and clone it
+	    $floatOne = new Float(0.1);
+	    $clonedOne = clone $floatOne;
+        // serialize/unserialize the Float instance
+	    $floatOne->unserialize($floatOne->serialize());
+		// check that the two Float instances are equal
+		$this->assertEquals($clonedOne, $floatOne);
+	}
+
+	/**
 	 * This test checks the resolved class name.
 	 *
 	 * @return void
