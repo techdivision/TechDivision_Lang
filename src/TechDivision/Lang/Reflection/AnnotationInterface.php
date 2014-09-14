@@ -44,6 +44,13 @@ interface AnnotationInterface
     public function getAnnotationName();
 
     /**
+     * Returns the annotation values.
+     *
+     * @return array The annotation values
+     */
+    public function getValues();
+
+    /**
      * Queries whether this annotation instance has a value with the passed key or not.
      *
      * @param string $key The key we want to query
@@ -71,4 +78,12 @@ interface AnnotationInterface
      * @return void
      */
     public function setValue($key, $value);
+
+    /**
+     * Returns a PHP reflection class representation of this instance.
+     *
+     * @return \ReflectionClass The PHP reflection class instance
+     * @see \TechDivision\Lang\Reflection\ClassInterface::toPhpReflectionClass()
+     */
+    public function toPhpReflectionClass();
 }

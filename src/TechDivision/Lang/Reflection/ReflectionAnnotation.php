@@ -91,6 +91,16 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
     }
 
     /**
+     * Returns the annotation values.
+     *
+     * @return array The annotation values
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    /**
      * Queries whether this annotation instance has a value with the passed key or not.
      *
      * @param string $key The key we want to query
@@ -157,6 +167,51 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
     }
 
     /**
+     * Returns a PHP reflection class representation of this instance.
+     *
+     * @return \ReflectionClass The PHP reflection class instance
+     * @see \TechDivision\Lang\Reflection\ClassInterface::toPhpReflectionClass()
+     */
+    public function toPhpReflectionClass()
+    {
+        return new \ReflectionClass($this->getAnnotationName());
+    }
+
+    /**
+     * Returns a new annotation instance.
+     *
+     * You can pass a random number of arguments to this function. These
+     * arguments will be passed to the constructor of the new instance.
+     *
+     * @return object A new annotation instance initialized with the passed arguments
+     * @link http://de2.php.net/func_get_args
+     */
+    public function newInstance()
+    {
+        return $this->newInstanceArgs(func_get_args());
+    }
+
+    /**
+     * Returns a new annotation instance.
+     *
+     * @param array $args The arguments that will be passed to the instance constructor
+     *
+     * @return object A new annotation instance initialized with the passed arguments
+     */
+    public function newInstanceArgs(array $args = array())
+    {
+        // create a reflection instance of the found annotation name
+        $reflectionClass = $this->toPhpReflectionClass();
+
+        if (sizeof($args) > 0) { // create a new instance passing the found arguements to the constructor
+            return $reflectionClass->newInstanceArgs($args);
+        }
+
+        // create a new instance without passing arguements to the constructor
+        return $reflectionClass->newInstance();
+    }
+
+    /**
      * Initializes and returns an array with annotation instances from the
      * passed doc comment.
      *
@@ -185,7 +240,14 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
 
         // iterate over the tokens
         foreach ($toArray->convert($tokens) as $token) {
-            $annotations[$token->name] = new ReflectionAnnotation($token->name, $token->values);
+
+            if (array_key_exists($token->name, $flipped = array_flip($aliases))) {
+                $annotationName = $flipped[$token->name];
+            } else {
+                $annotationName = $token->name;
+            }
+
+            $annotations[$annotationName] = new ReflectionAnnotation($token->name, $token->values);
         }
 
         // return the list with the annotation instances

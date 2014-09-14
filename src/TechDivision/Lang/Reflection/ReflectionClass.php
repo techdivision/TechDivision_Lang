@@ -46,13 +46,6 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
     protected $className = '';
 
     /**
-     * The method annotations.
-     *
-     * @var array|null
-     */
-    protected $annotations = null;
-
-    /**
      * Array with annotations names we want to ignore when loaded.
      *
      * @var array
@@ -132,13 +125,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      */
     public function getAnnotations()
     {
-
-        if ($this->annotations = null) { // make sure annotations has been loaded
-            $this->annotations = ReflectionAnnotation::fromReflectionClass($this);
-        }
-
-        // return the array with annotations
-        return $this->annotations;
+        return ReflectionAnnotation::fromReflectionClass($this);
     }
 
     /**
@@ -151,7 +138,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      */
     public function hasAnnotation($annotationName)
     {
-        array_key_exists($annotationName, $this->getAnnotations());
+        return array_key_exists($annotationName, $this->getAnnotations());
     }
 
     /**
@@ -160,13 +147,68 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      * @param string $annotationName The name of the requested annotation instance
      *
      * @return \TechDivision\Lang\Reflection\AnnotationInterface|null The requested annotation instance
+     * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested annotation is not available
      * @see \TechDivision\Lang\Reflection\ClassInterface::getAnnotation()
      */
     public function getAnnotation($annotationName)
     {
-        if ($this->hasAnnotation($annotationName)) {
-            return $this->annotations[$annotationName];
+
+        // first check if the method is available
+        if (array_key_exists($annotationName, $annotations = $this->getAnnotations())) { // if yes, return it
+            return $annotations[$annotationName];
         }
+
+        // if not, throw an exception
+        throw new ReflectionException(sprintf('The requested reflection annotation %s is not available', $annotationName));
+    }
+
+    /**
+     * Returns the class methods.
+     *
+     * @param integer $filter Filter the results to include only methods with certain attributes
+     *
+     * @return array The class methods
+     * @see \TechDivision\Lang\Reflection\ClassInterface::getMethods()
+     * @link http://php.net/manual/en/reflectionclass.getmethods.php
+     */
+    public function getMethods($filter = null)
+    {
+        return ReflectionMethod::fromReflectionClass($this, $filter, $this->getAnnotationsToIgnore(), $this->getAnnotationAliases());
+    }
+
+    /**
+     * Queries whether the reflection class has an annotation with the passed name or not.
+     *
+     * @param string $annotationName The annotation we want to query
+     *
+     * @return boolean TRUE if the reflection class has the annotation, else FALSE
+     * @see \TechDivision\Lang\Reflection\ClassInterface::hasAnnotation()
+     */
+    public function hasMethod($name)
+    {
+        return array_key_exists($name, $this->getMethods());
+    }
+
+    /**
+     * Returns the requested reflection method.
+     *
+     * @param string $name The name of the reflection method to return
+     *
+     * @return \TechDivision\Lang\Reflection\ReflectionMethod The requested reflection method
+     * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested method is not available
+     * @see \TechDivision\Lang\Reflection\ClassInterface::getMethod()
+     * @link http://php.net/manual/en/reflectionclass.getmethod.php
+     */
+    public function getMethod($name)
+    {
+
+        // first check if the method is available
+        if (array_key_exists($name, $methods = $this->getMethods())) { // if yes, return it
+            return $methods[$name];
+        }
+
+        // if not, throw an exception
+        throw new ReflectionException(sprintf('The requested reflection method %s is not available', $name));
     }
 
     /**

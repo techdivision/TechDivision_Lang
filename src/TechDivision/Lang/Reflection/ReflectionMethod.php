@@ -170,13 +170,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      */
     public function getAnnotations()
     {
-
-        if ($this->annotations = null) { // make sure annotations has been loaded
-            $this->annotations = ReflectionAnnotation::fromReflectionMethod($this);
-        }
-
-        // return the array with annotations
-        return $this->annotations;
+        return ReflectionAnnotation::fromReflectionMethod($this);
     }
 
     /**
@@ -189,7 +183,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      */
     public function hasAnnotation($annotationName)
     {
-        array_key_exists($annotationName, $this->getAnnotations());
+        return array_key_exists($annotationName, $this->getAnnotations());
     }
 
     /**
@@ -198,13 +192,19 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      * @param string $annotationName The name of the requested annotation instance
      *
      * @return \TechDivision\Lang\Reflection\AnnotationInterface|null The requested annotation instance
+     * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested annotation is not available
      * @see \TechDivision\Lang\Reflection\MethodInterface::hasAnnotation()
      */
     public function getAnnotation($annotationName)
     {
-        if ($this->hasAnnotation($annotationName)) {
-            return $this->annotations[$annotationName];
+
+        // first check if the method is available
+        if (array_key_exists($annotationName, $annotations = $this->getAnnotations())) { // if yes, return it
+            return $annotations[$annotationName];
         }
+
+        // if not, throw an exception
+        throw new ReflectionException(sprintf('The requested reflection annotation %s is not available', $annotationName));
     }
 
     /**
@@ -245,6 +245,32 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     }
 
     /**
+     * Returns an array of reflection method instances from the passed reflection class.
+     *
+     * @param \TechDivision\Lang\Reflection\ReflectionClass $reflectionClass     The reflection class to return the methods for
+     * @param interger                                      $filter              The filter used for loading the methods
+     * @param array                                         $annotationsToIgnore An array with annotations names we want to ignore when loaded
+     * @param array                                         $annotationAliases   An array with annotation aliases used when create annotation instances
+     *
+     * @return \TechDivision\Lang\Reflection\ReflectionMethod The instance
+     */
+    public static function fromReflectionClass(ReflectionClass $reflectionClass, $filter = 0, array $annotationsToIgnore = array(), array $annotationAliases = array())
+    {
+
+        // initialize the array for the reflection methods
+        $reflectionMethods = array();
+
+        // load the reflection methods and initialize the array with the reflection methods
+        $phpReflectionClass = $reflectionClass->toPhpReflectionClass();
+        foreach ($phpReflectionClass->getMethods() as $phpReflectionMethod) {
+            $reflectionMethods[$phpReflectionMethod->getName()] = ReflectionMethod::fromPhpReflectionMethod($phpReflectionMethod, $annotationsToIgnore, $annotationAliases);
+        }
+
+        // return the array with the initialized reflection methods
+        return $reflectionMethods;
+    }
+
+    /**
      * Creates a new reflection method instance from the passed PHP reflection method.
      *
      * @param \ReflectionMethod $reflectionMethod    The reflection method to load the data from
@@ -253,7 +279,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      *
      * @return \TechDivision\Lang\Reflection\ReflectionMethod The instance
      */
-    public static function fromReflectionMethod(\ReflectionMethod $reflectionMethod, array $annotationsToIgnore = array(), array $annotationAliases = array())
+    public static function fromPhpReflectionMethod(\ReflectionMethod $reflectionMethod, array $annotationsToIgnore = array(), array $annotationAliases = array())
     {
 
         // load class and method name from the reflection class

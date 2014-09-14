@@ -118,31 +118,67 @@ class ReflectionAnnotationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * This test checks if the annotations passed from a PHP reflection class will
+     * This test checks if the annotations passed from this instance will
      * be initialized correctly.
      *
      * @return void
      * @FirstTest
-     * @SecondTest(name=Test, description="Another Test", value={ "key" : "a value" })
      */
     public function testFromReflectionMethod()
     {
 
         // load the reflection method
-        $reflectionClass = new \ReflectionClass($this);
-        $reflectionMethod = ReflectionMethod::fromReflectionMethod($reflectionClass->getMethod('testFromReflectionMethod'));
-
-        // load the annotations of this class
-        $annotations = ReflectionAnnotation::fromReflectionMethod($reflectionMethod);
+        $reflectionClass = new ReflectionClass($this);
+        $reflectionMethod = $reflectionClass->getMethod('testFromReflectionMethod');
 
         // check if we can find the default annotations
-        $this->assertTrue(isset($annotations['return']));
-        $this->assertTrue(isset($annotations['FirstTest']));
-        $this->assertTrue(isset($annotations['SecondTest']));
+        $this->assertTrue($reflectionMethod->hasAnnotation('return'));
+        $this->assertTrue($reflectionMethod->hasAnnotation('FirstTest'));
+    }
 
-        // try to load the @SecondTest annotation with the specified name/description/value
-        $this->assertSame($annotations['SecondTest']->getValue('name'), 'Test');
-        $this->assertSame($annotations['SecondTest']->getValue('description'), 'Another Test');
-        $this->assertSame($annotations['SecondTest']->getValue('value'), array('key' => 'a value'));
+    /**
+     * This test checks if the annotations will be ignored correctly.
+     *
+     * @return void
+     */
+    public function testFromReflectionMethodIgnoreReturnAnnotation()
+    {
+
+        // initialize the annotations to ignore and the aliases
+        $ignore = array('return');
+
+        // load the reflection method
+        $reflectionClass = new ReflectionClass($this, $ignore);
+        $reflectionMethod = $reflectionClass->getMethod('testFromReflectionMethod');
+
+        // check if we can find the default annotations
+        $this->assertFalse($reflectionMethod->hasAnnotation('return'));
+    }
+
+    /**
+     * This test checks if the annotations newInstance() method works as expected.
+     *
+     * @return void
+     * @MockAnnotation(name=Test, description="Another Test", value={ "key" : "a value" })
+     */
+    public function testFromNewInstance()
+    {
+
+        // initialize the annotations to ignore and the aliases
+        $ignore = array();
+        $aliases = array('MockAnnotation' => 'TechDivision\Lang\Reflection\MockAnnotation');
+
+        // load the reflection method
+        $reflectionClass = new ReflectionClass($this, $ignore, $aliases);
+        $reflectionMethod = $reflectionClass->getMethod('testFromNewInstance');
+
+        // create a new instance of the found alias
+        $mockAnnotation = $reflectionMethod->getAnnotation('MockAnnotation');
+        $instance = $mockAnnotation->newInstance($mockAnnotation->getValues());
+
+        // check the values passed to the alias instance
+        $this->assertSame($instance->getValue('name'), 'Test');
+        $this->assertSame($instance->getValue('description'), 'Another Test');
+        $this->assertSame($instance->getValue('value'), array('key' => 'a value'));
     }
 }
