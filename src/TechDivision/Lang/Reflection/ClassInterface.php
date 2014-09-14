@@ -83,6 +83,36 @@ interface ClassInterface
     public function getAnnotation($annotationName);
 
     /**
+     * Returns the class methods.
+     *
+     * @param integer $filter Filter the results to include only methods with certain attributes
+     *
+     * @return array The class methods
+     * @link http://php.net/manual/en/reflectionclass.getmethods.php
+     */
+    public function getMethods($filter = 0);
+
+    /**
+     * Queries whether the reflection class has an method with the passed name or not.
+     *
+     * @param string $name The method we want to query
+     *
+     * @return boolean TRUE if the reflection class has the method, else FALSE
+     */
+    public function hasMethod($name);
+
+    /**
+     * Returns the requested reflection method.
+     *
+     * @param string $name The name of the reflection method to return
+     *
+     * @return \TechDivision\Lang\Reflection\ReflectionMethod The requested reflection method
+     * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested method is not available
+     * @link http://php.net/manual/en/reflectionclass.getmethod.php
+     */
+    public function getMethod($name);
+
+    /**
      * Returns a PHP reflection class representation of this instance.
      *
      * @return \ReflectionClass The PHP reflection class instance

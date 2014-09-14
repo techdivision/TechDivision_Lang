@@ -171,18 +171,18 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      * @see \TechDivision\Lang\Reflection\ClassInterface::getMethods()
      * @link http://php.net/manual/en/reflectionclass.getmethods.php
      */
-    public function getMethods($filter = null)
+    public function getMethods($filter = 0)
     {
         return ReflectionMethod::fromReflectionClass($this, $filter, $this->getAnnotationsToIgnore(), $this->getAnnotationAliases());
     }
 
     /**
-     * Queries whether the reflection class has an annotation with the passed name or not.
+     * Queries whether the reflection class has an method with the passed name or not.
      *
-     * @param string $annotationName The annotation we want to query
+     * @param string $name The method we want to query
      *
-     * @return boolean TRUE if the reflection class has the annotation, else FALSE
-     * @see \TechDivision\Lang\Reflection\ClassInterface::hasAnnotation()
+     * @return boolean TRUE if the reflection class has the method, else FALSE
+     * @see \TechDivision\Lang\Reflection\ClassInterface::hasMethod()
      */
     public function hasMethod($name)
     {

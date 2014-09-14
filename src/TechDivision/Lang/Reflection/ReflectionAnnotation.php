@@ -237,7 +237,7 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
         // iterate over the tokens
         foreach ($toArray->convert($tokens) as $token) {
 
-        	// check if we've an annotation that matched an alias
+            // check if we've an annotation that matched an alias
             if (array_key_exists($token->name, $flipped = array_flip($aliases))) {
                 $annotationName = $flipped[$token->name];
             } else {
