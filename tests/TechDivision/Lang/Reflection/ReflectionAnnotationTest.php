@@ -161,7 +161,7 @@ class ReflectionAnnotationTest extends \PHPUnit_Framework_TestCase
      * @return void
      * @MockAnnotation(name=Test, description="Another Test", value={ "key" : "a value" })
      */
-    public function testFromNewInstance()
+    public function testNewInstance()
     {
 
         // initialize the annotations to ignore and the aliases
@@ -170,7 +170,7 @@ class ReflectionAnnotationTest extends \PHPUnit_Framework_TestCase
 
         // load the reflection method
         $reflectionClass = new ReflectionClass($this, $ignore, $aliases);
-        $reflectionMethod = $reflectionClass->getMethod('testFromNewInstance');
+        $reflectionMethod = $reflectionClass->getMethod('testNewInstance');
 
         // create a new instance of the found alias
         $mockAnnotation = $reflectionMethod->getAnnotation('MockAnnotation');
@@ -180,5 +180,78 @@ class ReflectionAnnotationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($instance->getValue('name'), 'Test');
         $this->assertSame($instance->getValue('description'), 'Another Test');
         $this->assertSame($instance->getValue('value'), array('key' => 'a value'));
+    }
+
+    /**
+     * This test checks if the annotations newInstanceArgs() method works as expected.
+     *
+     * @return void
+     * @MockAnnotation(name=Test, description="Another Test", value={ "key" : "a value" })
+     */
+    public function testNewInstanceArgs()
+    {
+
+        // initialize the annotations to ignore and the aliases
+        $ignore = array();
+        $aliases = array('MockAnnotation' => 'TechDivision\Lang\Reflection\MockAnnotation');
+
+        // load the reflection method
+        $reflectionClass = new ReflectionClass($this, $ignore, $aliases);
+        $reflectionMethod = $reflectionClass->getMethod('testNewInstanceArgs');
+
+        // create a new instance of the found alias
+        $mockAnnotation = $reflectionMethod->getAnnotation('MockAnnotation');
+        $instance = $mockAnnotation->newInstanceArgs(array($mockAnnotation->getValues()));
+
+        // check the values passed to the annotation instance
+        $this->assertSame($instance->getValue('name'), 'Test');
+        $this->assertSame($instance->getValue('description'), 'Another Test');
+        $this->assertSame($instance->getValue('value'), array('key' => 'a value'));
+    }
+
+    /**
+     * This test checks if the annotations newInstanceArgs() method works as expected.
+     *
+     * @return void
+     * @MockAnnotation
+     */
+    public function testNewInstanceArgsWithoutArgs()
+    {
+
+        // initialize the annotations to ignore and the aliases
+        $ignore = array();
+        $aliases = array('MockAnnotation' => 'TechDivision\Lang\Reflection\MockAnnotation');
+
+        // load the reflection method
+        $reflectionClass = new ReflectionClass($this, $ignore, $aliases);
+        $reflectionMethod = $reflectionClass->getMethod('testNewInstanceArgsWithoutArgs');
+
+        // create a new instance of the found alias
+        $mockAnnotation = $reflectionMethod->getAnnotation('MockAnnotation');
+        $instance = $mockAnnotation->newInstanceArgs(array($mockAnnotation->getValues()));
+
+        // check that no values have been passed to the annotation instance
+        $this->assertNull($instance->getValue('name'));
+    }
+
+    /**
+     * Test if the set/get methods works as exptected.
+     *
+     * @return void
+     */
+    public function testSetGetValue()
+    {
+        $this->annotationInstance->setValue($key = 'test', $value = 'a test value');
+        $this->assertSame($this->annotationInstance->getValue($key), $value);
+    }
+
+    /**
+     * Test if the requesting a value with an unknown key returns NULL.
+     *
+     * @return void
+     */
+    public function testGetWithInvalidKey()
+    {
+        $this->assertNull($this->annotationInstance->getValue('unknownKey'));
     }
 }

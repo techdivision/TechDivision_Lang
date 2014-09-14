@@ -203,12 +203,8 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
         // create a reflection instance of the found annotation name
         $reflectionClass = $this->toPhpReflectionClass();
 
-        if (sizeof($args) > 0) { // create a new instance passing the found arguements to the constructor
-            return $reflectionClass->newInstanceArgs($args);
-        }
-
-        // create a new instance without passing arguements to the constructor
-        return $reflectionClass->newInstance();
+        // create a new instance passing the found arguements to the constructor
+        return $reflectionClass->newInstanceArgs($args);
     }
 
     /**
@@ -241,12 +237,14 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
         // iterate over the tokens
         foreach ($toArray->convert($tokens) as $token) {
 
+        	// check if we've an annotation that matched an alias
             if (array_key_exists($token->name, $flipped = array_flip($aliases))) {
                 $annotationName = $flipped[$token->name];
             } else {
                 $annotationName = $token->name;
             }
 
+            // register the annotation with the real annotation name (not the alias)
             $annotations[$annotationName] = new ReflectionAnnotation($token->name, $token->values);
         }
 

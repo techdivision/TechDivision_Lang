@@ -37,18 +37,22 @@ class ReflectionMethodTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * A random name for a class.
-     *
-     * @var string
-     */
-    const CLASS_NAME = 'TechDivision\Lang\MyClass';
-
-    /**
      * A random name for a method.
      *
      * @var string
      */
-    const METHOD_NAME = 'someMethod';
+    const METHOD_NAME = 'testGetAnnotation';
+
+    /**
+     * Initializes the instance before we run each test.
+     *
+     * @return void
+     * @see PHPUnit_Framework_TestCase::setUp()
+     */
+    protected function setUp()
+    {
+        $this->reflectionMethod = new ReflectionMethod(__CLASS__, ReflectionMethodTest::METHOD_NAME);
+    }
 
     /**
      * Checks the serialize/unserialize methods implemented
@@ -59,7 +63,7 @@ class ReflectionMethodTest extends \PHPUnit_Framework_TestCase
     public function testSerializeAndUnserialize()
     {
         // initialize a ReflectionMethod instance and clone it
-        $methodOne = new ReflectionMethod(ReflectionMethodTest::CLASS_NAME, ReflectionMethodTest::METHOD_NAME);
+        $methodOne = new ReflectionMethod(__CLASS__, ReflectionMethodTest::METHOD_NAME);
         $clonedOne = clone $methodOne;
         // serialize/unserialize the ReflectionMethod
         $methodOne->unserialize($methodOne->serialize());
@@ -76,5 +80,42 @@ class ReflectionMethodTest extends \PHPUnit_Framework_TestCase
     {
         // check for the correct class name
         $this->assertEquals('TechDivision\Lang\Reflection\ReflectionMethod', ReflectionMethod::__getClass());
+    }
+
+    /**
+     * This method is acutally not implemented, so we expected an exception.
+     *
+     * @return void
+     * @expectedException TechDivision\Lang\Reflection\ReflectionException
+     */
+    public function testGetParameters()
+    {
+        $reflectionClass = new ReflectionClass(__CLASS__);
+        $reflectionClass->getMethod('testGetParameters')->getParameters();
+    }
+
+    /**
+     * Test if the class annotation is available and has the correct values set.
+     *
+     * @return void
+     * @MockAnnotation(name=MockAnnotation, description="some description", value="a value")
+     */
+    public function testGetAnnotation()
+    {
+        $annotation = $this->reflectionMethod->getAnnotation('MockAnnotation');
+        $this->assertSame($annotation->getValue('name'), 'MockAnnotation');
+        $this->assertSame($annotation->getValue('description'), 'some description');
+        $this->assertSame($annotation->getValue('value'), 'a value');
+    }
+
+    /**
+     * Test if an execption is thrown if a requested annotation is not available.
+     *
+     * @return void
+     * @expectedException TechDivision\Lang\Reflection\ReflectionException
+     */
+    public function testGetAnnotationWithException()
+    {
+        $this->reflectionMethod->getAnnotation('UnknownAnnotation');
     }
 }

@@ -39,7 +39,7 @@ class MockAnnotation extends Object
 {
 
 
-    public function __construct($values)
+    public function __construct(array $values = array())
     {
         $this->values = $values;
     }
