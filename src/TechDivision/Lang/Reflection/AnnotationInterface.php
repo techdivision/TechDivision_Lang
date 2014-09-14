@@ -41,5 +41,34 @@ interface AnnotationInterface
      *
      * @return string The annotation name
      */
-    public function getName();
+    public function getAnnotationName();
+
+    /**
+     * Queries whether this annotation instance has a value with the passed key or not.
+     *
+     * @param string $key The key we want to query
+     *
+     * @return boolean TRUE if the value is available, else FALSE
+     */
+    public function hasValue($key);
+
+    /**
+     * Returns the value for the passed key, if available.
+     *
+     * @param string $key The key of the value to return
+     *
+     * @return mixed|null The requested value
+     */
+    public function getValue($key);
+
+    /**
+     * Sets the value with the passed key, existing values
+     * are overwritten.
+     *
+     * @param string $key   The key of the value
+     * @param string $value The value to set
+     *
+     * @return void
+     */
+    public function setValue($key, $value);
 }

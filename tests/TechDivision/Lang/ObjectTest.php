@@ -1,29 +1,22 @@
 <?php
 
 /**
- * License: GNU General Public License
+ * \TechDivision\Lang\ObjectTest
  *
- * Copyright (c) 2009 TechDivision GmbH.  All rights reserved.
- * Note: Original work copyright to respective authors
+ * NOTICE OF LICENSE
  *
- * This file is part of TechDivision GmbH - Connect.
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
  *
- * faett.net is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * PHP version 5
  *
- * faett.net is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
- * USA.
- *
- * @package TechDivision_Lang
+ * @category  Library
+ * @package   TechDivision_Lang
+ * @author    Tim Wagner <tw@techdivision.com>
+ * @copyright 2014 TechDivision GmbH <info@techdivision.com>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/techdivision/TechDivision_Lang
  */
 
 namespace TechDivision\Lang;
@@ -31,11 +24,12 @@ namespace TechDivision\Lang;
 /**
  * This is the test for the Object class.
  *
- * @package TechDivision_Lang
- * @author Tim Wagner <t.wagner@techdivision.com>
- * @copyright TechDivision GmbH
- * @link http://www.techdivision.com
- * @license GPL
+ * @category  Library
+ * @package   TechDivision_Lang
+ * @author    Tim Wagner <tw@techdivision.com>
+ * @copyright 2014 TechDivision GmbH <info@techdivision.com>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/techdivision/TechDivision_Lang
  */
 class ObjectTest extends \PHPUnit_Framework_TestCase
 {
