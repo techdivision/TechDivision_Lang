@@ -1,3 +1,14 @@
+# Version 0.1.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add generic userland implementations for reflection annotation, class and method
+* Add dependency to herrera-io/annotations to parse and initialized Doctrine style annotations
+
 # Version 0.1.4
 
 ## Bugfixes
