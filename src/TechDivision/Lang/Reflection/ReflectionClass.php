@@ -43,7 +43,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      *
      * @var string
      */
-    protected $className = '';
+    protected $name = '';
 
     /**
      * Array with annotations names we want to ignore when loaded.
@@ -62,13 +62,13 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
     /**
      * Initializes the timed object with the passed data.
      *
-     * @param string $className           The class name to invoke the method on
+     * @param string $name                The class name to invoke the method on
      * @param array  $annotationsToIgnore An array with annotations names we want to ignore when loaded
      * @param array  $annotationAliases   An array with annotation aliases used when create annotation instances
      */
-    public function __construct($className, array $annotationsToIgnore = array(), array $annotationAliases = array())
+    public function __construct($name, array $annotationsToIgnore = array(), array $annotationAliases = array())
     {
-        $this->className = $className;
+        $this->name = $name;
         $this->annotationsToIgnore = $annotationsToIgnore;
         $this->annotationAliases = $annotationAliases;
     }
@@ -90,9 +90,9 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      * @return string The class name
      * @see \TechDivision\Lang\Reflection\ClassInterface::getClassName()
      */
-    public function getClassName()
+    public function getName()
     {
-        return $this->className;
+        return $this->name;
     }
 
     /**
@@ -212,6 +212,37 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
     }
 
     /**
+     * Returns a new annotation instance.
+     *
+     * You can pass a random number of arguments to this function. These
+     * arguments will be passed to the constructor of the new instance.
+     *
+     * @return object A new annotation instance initialized with the passed arguments
+     * @see \TechDivision\Lang\Reflection\ClassInterface::newInstance()
+     */
+    public function newInstance()
+    {
+        return $this->newInstanceArgs(func_get_args());
+    }
+
+    /**
+     * Returns a new annotation instance.
+     *
+     * @param array $args The arguments that will be passed to the instance constructor
+     *
+     * @return object A new annotation instance initialized with the passed arguments
+     * @see \TechDivision\Lang\Reflection\ClassInterface::newInstanceArgs()
+     */
+    public function newInstanceArgs(array $args = array())
+    {
+        // create a reflection instance of the found annotation name
+        $reflectionClass = $this->toPhpReflectionClass();
+
+        // create a new instance passing the found arguements to the constructor
+        return $reflectionClass->newInstanceArgs($args);
+    }
+
+    /**
      * Serializes the timeout method and returns a string representation.
      *
      * @return string The serialized string representation of the instance
@@ -238,6 +269,19 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
     }
 
     /**
+     * Checks whether it implements the passed interface or not.
+     *
+     * @param string $interface The interface name
+     *
+     * @return boolean Returns TRUE on success or FALSE on failure
+     * @link php.net/manual/en/reflectionclass.implementsinterface.php
+     */
+    public function implementsInterface($interface)
+    {
+        return $this->toPhpReflectionClass()->implementsInterface($interface);
+    }
+
+    /**
      * Returns a PHP reflection class representation of this instance.
      *
      * @return \ReflectionClass The PHP reflection class instance
@@ -245,7 +289,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      */
     public function toPhpReflectionClass()
     {
-        return new \ReflectionClass($this->getClassName());
+        return new \ReflectionClass($this->getName());
     }
 
     /**

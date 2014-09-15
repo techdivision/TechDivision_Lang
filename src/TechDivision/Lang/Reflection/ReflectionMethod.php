@@ -234,6 +234,35 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     }
 
     /**
+     * Invokes a reflected method. You cann pass a random number of additional
+     * parameters that'll be passed to the method as parameters.
+     *
+     * @param object $object The object to invoke the method on
+     *
+     * @return mixed Returns the method result
+     * @see \TechDivision\Lang\Reflection\ReflectionMethod::invokeArgs()
+     * @link http://php.net/manual/en/reflectionmethod.invoke.php
+     */
+    public function invoke($object)
+    {
+        return $this->invokeArgs($object, func_get_args());
+    }
+
+    /**
+     * Invokes the reflected method and pass its arguments as array.
+     *
+     * @param object $object The object to invoke the method on
+     * @param array  $args   The parameters to be passed to the function, as an array
+     *
+     * @return mixed Returns the method result
+     * @link http://php.net/manual/en/reflectionmethod.invokeargs.php
+     */
+    public function invokeArgs($object, array $args = array())
+    {
+        return $this->toPhpReflectionMethod()->invokeArgs($object, $args);
+    }
+
+    /**
      * Returns a PHP reflection method representation of this instance.
      *
      * @return \ReflectionMethod The PHP reflection method instance

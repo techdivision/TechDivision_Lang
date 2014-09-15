@@ -41,7 +41,7 @@ interface ClassInterface
      *
      * @return string The class name
      */
-    public function getClassName();
+    public function getName();
 
     /**
      * Returns an array with annotation names we want to ignore when loaded.
@@ -111,6 +111,27 @@ interface ClassInterface
      * @link http://php.net/manual/en/reflectionclass.getmethod.php
      */
     public function getMethod($name);
+
+    /**
+     * Returns a new annotation instance.
+     *
+     * You can pass a random number of arguments to this function. These
+     * arguments will be passed to the constructor of the new instance.
+     *
+     * @return object A new annotation instance initialized with the passed arguments
+     * @link http://php.net/manual/en/reflectionclass.newinstance.php
+     */
+    public function newInstance();
+
+    /**
+     * Returns a new annotation instance.
+     *
+     * @param array $args The arguments that will be passed to the instance constructor
+     *
+     * @return object A new annotation instance initialized with the passed arguments
+     * @link http://php.net/manual/en/reflectionclass.newinstanceargs.php
+     */
+    public function newInstanceArgs(array $args = array());
 
     /**
      * Returns a PHP reflection class representation of this instance.
