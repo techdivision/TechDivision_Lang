@@ -83,7 +83,7 @@ class ReflectionClassTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClassName()
     {
-        $this->assertSame(__CLASS__, $this->reflectionClass->getClassName());
+        $this->assertSame(__CLASS__, $this->reflectionClass->getName());
     }
 
     /**
@@ -160,6 +160,6 @@ class ReflectionClassTest extends \PHPUnit_Framework_TestCase
     public function testFromPhpReflectionClass()
     {
         $reflectionClass = ReflectionClass::fromPhpReflectionClass(new \ReflectionClass($this));
-        $this->assertSame(__CLASS__, $reflectionClass->getClassName());
+        $this->assertSame(__CLASS__, $reflectionClass->getName());
     }
 }

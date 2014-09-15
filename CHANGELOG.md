@@ -1,3 +1,15 @@
+# Version 0.1.6
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add ReflectionObject implementation
+* Add ReflectionClass::newInstance() and ReflectionClass::newInstanceArgs() methods
+* Rename method ReflectionClass::getClassName() to ReflectionClass::getName()
+
 # Version 0.1.5
 
 ## Bugfixes
