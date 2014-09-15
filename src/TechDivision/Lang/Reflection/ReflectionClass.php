@@ -39,11 +39,11 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
 {
 
     /**
-     * The class name to invoke the method on.
+     * The passed class name to invoke the method on.
      *
      * @var string
      */
-    protected $name = '';
+    protected $passedName = '';
 
     /**
      * Array with annotations names we want to ignore when loaded.
@@ -68,7 +68,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      */
     public function __construct($name, array $annotationsToIgnore = array(), array $annotationAliases = array())
     {
-        $this->name = $name;
+        $this->passedName = $name;
         $this->annotationsToIgnore = $annotationsToIgnore;
         $this->annotationAliases = $annotationAliases;
     }
@@ -85,6 +85,16 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
     }
 
     /**
+     * Returns the class name passed to the constructor.
+     *
+     * @return string The class name passed to the constructor
+     */
+    protected function getPassedName()
+    {
+        return $this->passedName;
+    }
+
+    /**
      * Returns the class name.
      *
      * @return string The class name
@@ -92,7 +102,18 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      */
     public function getName()
     {
-        return $this->name;
+        return $this->toPhpReflectionClass()->getName();
+    }
+
+    /**
+     * Returns the short class name (without namespace).
+     *
+     * @return string The short class name
+     * @see \TechDivision\Lang\Reflection\ClassInterface::getClassName()
+     */
+    public function getShortName()
+    {
+        return $this->toPhpReflectionClass()->getShortName();
     }
 
     /**
@@ -289,7 +310,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      */
     public function toPhpReflectionClass()
     {
-        return new \ReflectionClass($this->getName());
+        return new \ReflectionClass($this->getPassedName());
     }
 
     /**

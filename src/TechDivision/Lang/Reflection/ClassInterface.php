@@ -44,6 +44,13 @@ interface ClassInterface
     public function getName();
 
     /**
+     * Returns the short class name (without namespace).
+     *
+     * @return string The short class name
+     */
+    public function getShortName();
+
+    /**
      * Returns an array with annotation names we want to ignore when loaded.
      *
      * @return array The annotation names we want to ignore
