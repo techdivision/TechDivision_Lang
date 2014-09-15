@@ -1,3 +1,13 @@
+# Version 0.1.7
+
+## Bugfixes
+
+* Bugfix to return real class name when invoking ReflectionClass:getName() instead of the one passed to the constructor
+
+## Features
+
+* Add method ReflectionClass::getShortName()
+
 # Version 0.1.6
 
 ## Bugfixes
