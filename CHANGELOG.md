@@ -1,3 +1,13 @@
+# Version 0.1.8
+
+## Bugfixes
+
+* Activate ReflectionClass::getMethods() $filter parameter with -1 to ignore filter by default
+
+## Features
+
+* Add ReflectionProperty functionality
+
 # Version 0.1.7
 
 ## Bugfixes

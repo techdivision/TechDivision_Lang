@@ -254,6 +254,27 @@ class ReflectionAnnotation extends Object implements AnnotationInterface, \Seria
 
     /**
      * Initializes and returns an array with annotation instances from the doc comment
+     * found in the passed reflection property instance.
+     *
+     * @param \TechDivision\Lang\Reflection\PropertyInterface $reflectionProperty The reflection property to load the doc comment from
+     *
+     * @return array The array with the ReflectionAnnotation instances loaded from the passed reflection property
+     * @see \TechDivision\Lang\Reflection\ReflectionAnnotation::fromDocComment()
+     */
+    public static function fromReflectionProperty(PropertyInterface $reflectionProperty)
+    {
+
+        // load the reflection method data we need to initialize the annotations
+        $aliases = $reflectionProperty->getAnnotationAliases();
+        $ignore = $reflectionProperty->getAnnotationsToIgnore();
+        $docComment = $reflectionProperty->toPhpReflectionProperty()->getDocComment();
+
+        // load and return the annotations found in the doc comment
+        return ReflectionAnnotation::fromDocComment($docComment, $ignore, $aliases);
+    }
+
+    /**
+     * Initializes and returns an array with annotation instances from the doc comment
      * found in the passed reflection method instance.
      *
      * @param \TechDivision\Lang\Reflection\MethodInterface $reflectionMethod The reflection method to load the doc comment from

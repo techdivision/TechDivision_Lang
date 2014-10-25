@@ -38,6 +38,13 @@ class ReflectionClassTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * The reflection class intance we want to test.
+     *
+     * @var \TechDivision\Lang\Reflection\ReflectionClass
+     */
+    protected $reflectionClass;
+
+    /**
      * Initializes the instance before we run each test.
      *
      * @return void
@@ -161,5 +168,25 @@ class ReflectionClassTest extends \PHPUnit_Framework_TestCase
     {
         $reflectionClass = ReflectionClass::fromPhpReflectionClass(new \ReflectionClass($this));
         $this->assertSame(__CLASS__, $reflectionClass->getName());
+    }
+
+    /**
+     * Checks if the hasMethod() method works as expected.
+     *
+     * @return void
+     */
+    public function testHasMethod()
+    {
+        $this->assertTrue($this->reflectionClass->hasMethod('testHasMethod'));
+    }
+
+    /**
+     * Checks if the hasProperty() method works as expected.
+     *
+     * @return void
+     */
+    public function testHasProperty()
+    {
+        $this->assertTrue($this->reflectionClass->hasProperty('reflectionClass'));
     }
 }

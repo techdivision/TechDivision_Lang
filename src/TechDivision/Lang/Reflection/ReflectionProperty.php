@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Lang\Reflection\ReflectionMethod
+ * TechDivision\Lang\Reflection\ReflectionProperty
  *
  * NOTICE OF LICENSE
  *
@@ -25,7 +25,7 @@ namespace TechDivision\Lang\Reflection;
 use TechDivision\Lang\Object;
 
 /**
- * A wrapper instance for a reflection method.
+ * A wrapper instance for a reflection property.
  *
  * @category   Library
  * @package    TechDivision_Lang
@@ -35,29 +35,22 @@ use TechDivision\Lang\Object;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Lang
  */
-class ReflectionMethod extends Object implements MethodInterface, \Serializable
+class ReflectionProperty extends Object implements PropertyInterface, \Serializable
 {
 
     /**
-     * The class name to invoke the method on.
+     * The properties class name.
      *
      * @var string
      */
     protected $className = '';
 
     /**
-     * The method name to invoke on the class.
+     * The property name.
      *
      * @var string
      */
-    protected $methodName = '';
-
-    /**
-     * The method parameters.
-     *
-     * @var string
-     */
-    protected $parameters = null;
+    protected $propertyName = '';
 
     /**
      * The method annotations.
@@ -81,17 +74,17 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     protected $annotationAliases = array();
 
     /**
-     * Initializes the timeout method with the passed data.
+     * Initializes the reflection property with the passed data.
      *
-     * @param string $className           The class name to invoke the method on
-     * @param string $methodName          The method name to invoke on the class
+     * @param string $className           The properties class name
+     * @param string $propertyName        The property name
      * @param array  $annotationsToIgnore An array with annotations names we want to ignore when loaded
      * @param array  $annotationAliases   An array with annotation aliases used when create annotation instances
      */
-    public function __construct($className, $methodName, array $annotationsToIgnore = array(), array $annotationAliases = array())
+    public function __construct($className, $propertyName, array $annotationsToIgnore = array(), array $annotationAliases = array())
     {
         $this->className = $className;
-        $this->methodName = $methodName;
+        $this->propertyName = $propertyName;
         $this->annotationsToIgnore = $annotationsToIgnore;
         $this->annotationAliases = $annotationAliases;
     }
@@ -108,10 +101,10 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     }
 
     /**
-     * Returns the class name to invoke the method on.
+     * Returns the properties class name.
      *
      * @return string The class name
-     * @see \TechDivision\Lang\Reflection\MethodInterface::getClassName()
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::getClassName()
      */
     public function getClassName()
     {
@@ -119,21 +112,21 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     }
 
     /**
-     * Returns the method name to invoke on the class.
+     * Returns the property name.
      *
-     * @return string The method name
-     * @see \TechDivision\Lang\Reflection\MethodInterface::getMethodName()
+     * @return string The property name
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::getPropertyName()
      */
-    public function getMethodName()
+    public function getPropertyName()
     {
-        return $this->methodName;
+        return $this->propertyName;
     }
 
     /**
      * Returns an array with annotation names we want to ignore when loaded.
      *
      * @return array The annotation names we want to ignore
-     * @see \TechDivision\Lang\Reflection\MethodInterface::getAnnotationsToIgnore()
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::getAnnotationsToIgnore()
      */
     public function getAnnotationsToIgnore()
     {
@@ -144,7 +137,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      * Returns an array with annotation aliases used when create annotation instances.
      *
      * @return array The annotation aliases used when create annotation instances
-     * @see \TechDivision\Lang\Reflection\MethodInterface::getAnnotationAliases()
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::getAnnotationAliases()
      */
     public function getAnnotationAliases()
     {
@@ -152,25 +145,14 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     }
 
     /**
-     * Returns the method parameters.
-     *
-     * @return array The method parameters
-     * @see \TechDivision\Lang\Reflection\MethodInterface::getParameters()
-     */
-    public function getParameters()
-    {
-        throw new ReflectionException(__METHOD__ . ' has not been implemented yet');
-    }
-
-    /**
      * Returns the method annotations.
      *
      * @return array The method annotations
-     * @see \TechDivision\Lang\Reflection\MethodInterface::getAnnotations()
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::getAnnotations()
      */
     public function getAnnotations()
     {
-        return ReflectionAnnotation::fromReflectionMethod($this);
+        return ReflectionAnnotation::fromReflectionProperty($this);
     }
 
     /**
@@ -179,7 +161,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      * @param string $annotationName The annotation we want to query
      *
      * @return boolean TRUE if the reflection method has the annotation, else FALSE
-     * @see \TechDivision\Lang\Reflection\MethodInterface::hasAnnotation()
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::hasAnnotation()
      */
     public function hasAnnotation($annotationName)
     {
@@ -193,7 +175,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      *
      * @return \TechDivision\Lang\Reflection\AnnotationInterface|null The requested annotation instance
      * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested annotation is not available
-     * @see \TechDivision\Lang\Reflection\MethodInterface::hasAnnotation()
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::hasAnnotation()
      */
     public function getAnnotation($annotationName)
     {
@@ -221,7 +203,7 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     /**
      * Restores the instance with the serialized data of the passed string.
      *
-     * @param string $data The serialized method representation
+     * @param string $data The serialized property representation
      *
      * @return void
      * @see \Serializable::unserialize()
@@ -234,88 +216,59 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
     }
 
     /**
-     * Invokes a reflected method. You cann pass a random number of additional
-     * parameters that'll be passed to the method as parameters.
+     * Returns a PHP reflection property representation of this instance.
      *
-     * @param object $object The object to invoke the method on
-     *
-     * @return mixed Returns the method result
-     * @see \TechDivision\Lang\Reflection\ReflectionMethod::invokeArgs()
-     * @link http://php.net/manual/en/reflectionmethod.invoke.php
+     * @return \ReflectionProperty The PHP reflection property instance
+     * @see \TechDivision\Lang\Reflection\PropertyInterface::toPhpReflectionProperty()
      */
-    public function invoke($object)
+    public function toPhpReflectionProperty()
     {
-        return $this->invokeArgs($object, func_get_args());
+        return new \ReflectionProperty($this->getClassName(), $this->getPropertyName());
     }
 
     /**
-     * Invokes the reflected method and pass its arguments as array.
+     * Returns an array of reflection property instances from the passed reflection class.
      *
-     * @param object $object The object to invoke the method on
-     * @param array  $args   The parameters to be passed to the function, as an array
-     *
-     * @return mixed Returns the method result
-     * @link http://php.net/manual/en/reflectionmethod.invokeargs.php
-     */
-    public function invokeArgs($object, array $args = array())
-    {
-        return $this->toPhpReflectionMethod()->invokeArgs($object, $args);
-    }
-
-    /**
-     * Returns a PHP reflection method representation of this instance.
-     *
-     * @return \ReflectionMethod The PHP reflection method instance
-     * @see \TechDivision\Lang\Reflection\MethodInterface::toPhpReflectionMethod()
-     */
-    public function toPhpReflectionMethod()
-    {
-        return new \ReflectionMethod($this->getClassName(), $this->getMethodName());
-    }
-
-    /**
-     * Returns an array of reflection method instances from the passed reflection class.
-     *
-     * @param \TechDivision\Lang\Reflection\ReflectionClass $reflectionClass     The reflection class to return the methods for
-     * @param interger                                      $filter              The filter used for loading the methods
+     * @param \TechDivision\Lang\Reflection\ReflectionClass $reflectionClass     The reflection class to return the properties for
+     * @param interger                                      $filter              The filter used for loading the properties
      * @param array                                         $annotationsToIgnore An array with annotations names we want to ignore when loaded
      * @param array                                         $annotationAliases   An array with annotation aliases used when create annotation instances
      *
-     * @return array An array with ReflectionMethod instances
+     * @return array An array with ReflectionProperty instances
      */
-    public static function fromReflectionClass(ReflectionClass $reflectionClass, $filter = -1, array $annotationsToIgnore = array(), array $annotationAliases = array())
+    public static function fromReflectionClass(ReflectionClass $reflectionClass, $filter = 0, array $annotationsToIgnore = array(), array $annotationAliases = array())
     {
 
-        // initialize the array for the reflection methods
-        $reflectionMethods = array();
+        // initialize the array for the reflection properties
+        $reflectionProperties = array();
 
-        // load the reflection methods and initialize the array with the reflection methods
+        // load the reflection properties and initialize the array with the reflection properties
         $phpReflectionClass = $reflectionClass->toPhpReflectionClass();
-        foreach ($phpReflectionClass->getMethods($filter) as $phpReflectionMethod) {
-            $reflectionMethods[$phpReflectionMethod->getName()] = ReflectionMethod::fromPhpReflectionMethod($phpReflectionMethod, $annotationsToIgnore, $annotationAliases);
+        foreach ($phpReflectionClass->getProperties($filter) as $phpReflectionProperty) {
+            $reflectionProperties[$phpReflectionProperty->getName()] = ReflectionProperty::fromPhpReflectionProperty($phpReflectionProperty, $annotationsToIgnore, $annotationAliases);
         }
 
-        // return the array with the initialized reflection methods
-        return $reflectionMethods;
+        // return the array with the initialized reflection properties
+        return $reflectionProperties;
     }
 
     /**
-     * Creates a new reflection method instance from the passed PHP reflection method.
+     * Creates a new reflection property instance from the passed PHP reflection property.
      *
-     * @param \ReflectionMethod $reflectionMethod    The reflection method to load the data from
-     * @param array             $annotationsToIgnore An array with annotations names we want to ignore when loaded
-     * @param array             $annotationAliases   An array with annotation aliases used when create annotation instances
+     * @param \ReflectionProperty $reflectionProperty  The reflection property to load the data from
+     * @param array               $annotationsToIgnore An array with annotations names we want to ignore when loaded
+     * @param array               $annotationAliases   An array with annotation aliases used when create annotation instances
      *
-     * @return \TechDivision\Lang\Reflection\ReflectionMethod The instance
+     * @return \TechDivision\Lang\Reflection\ReflectionProperty The instance
      */
-    public static function fromPhpReflectionMethod(\ReflectionMethod $reflectionMethod, array $annotationsToIgnore = array(), array $annotationAliases = array())
+    public static function fromPhpReflectionProperty(\ReflectionProperty $reflectionProperty, array $annotationsToIgnore = array(), array $annotationAliases = array())
     {
 
         // load class and method name from the reflection class
-        $className = $reflectionMethod->getDeclaringClass()->getName();
-        $methodName = $reflectionMethod->getName();
+        $className = $reflectionProperty->getDeclaringClass()->getName();
+        $propertyName = $reflectionProperty->getName();
 
         // initialize and return the timeout method instance
-        return new ReflectionMethod($className, $methodName, $annotationsToIgnore, $annotationAliases);
+        return new ReflectionProperty($className, $propertyName, $annotationsToIgnore, $annotationAliases);
     }
 }
