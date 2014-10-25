@@ -192,7 +192,7 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
      * @see \TechDivision\Lang\Reflection\ClassInterface::getMethods()
      * @link http://php.net/manual/en/reflectionclass.getmethods.php
      */
-    public function getMethods($filter = 0)
+    public function getMethods($filter = -1)
     {
         return ReflectionMethod::fromReflectionClass($this, $filter, $this->getAnnotationsToIgnore(), $this->getAnnotationAliases());
     }
@@ -230,6 +230,55 @@ class ReflectionClass extends Object implements ClassInterface, \Serializable
 
         // if not, throw an exception
         throw new ReflectionException(sprintf('The requested reflection method %s is not available', $name));
+    }
+
+    /**
+     * Returns the class properties.
+     *
+     * @param integer $filter Filter the results to include only properties with certain attributes
+     *
+     * @return array The class properties
+     * @see \TechDivision\Lang\Reflection\ClassInterface::getProperties()
+     * @link http://php.net/manual/en/reflectionclass.getproperties.php
+     */
+    public function getProperties($filter = -1)
+    {
+        return ReflectionProperty::fromReflectionClass($this, $filter, $this->getAnnotationsToIgnore(), $this->getAnnotationAliases());
+    }
+
+    /**
+     * Queries whether the reflection class has an property with the passed name or not.
+     *
+     * @param string $name The property we want to query
+     *
+     * @return boolean TRUE if the reflection class has the property, else FALSE
+     * @see \TechDivision\Lang\Reflection\ClassInterface::hasProperty()
+     */
+    public function hasProperty($name)
+    {
+        return array_key_exists($name, $this->getProperties());
+    }
+
+    /**
+     * Returns the requested reflection property.
+     *
+     * @param string $name The name of the reflection property to return
+     *
+     * @return \TechDivision\Lang\Reflection\ReflectionProperty The requested reflection property
+     * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested property is not available
+     * @see \TechDivision\Lang\Reflection\ClassInterface::getProperty()
+     * @link http://php.net/manual/en/reflectionclass.getproperty.php
+     */
+    public function getProperty($name)
+    {
+
+        // first check if the property is available
+        if (array_key_exists($name, $properties = $this->getProperties())) { // if yes, return it
+            return $properties[$name];
+        }
+
+        // if not, throw an exception
+        throw new ReflectionException(sprintf('The requested reflection property %s is not available', $name));
     }
 
     /**

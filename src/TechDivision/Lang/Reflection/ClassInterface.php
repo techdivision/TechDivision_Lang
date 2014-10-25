@@ -120,6 +120,36 @@ interface ClassInterface
     public function getMethod($name);
 
     /**
+     * Returns the class properties.
+     *
+     * @param integer $filter Filter the results to include only properties with certain attributes
+     *
+     * @return array The class properties
+     * @link http://php.net/manual/en/reflectionclass.getproperties.php
+     */
+    public function getProperties($filter = 0);
+
+    /**
+     * Queries whether the reflection class has an property with the passed name or not.
+     *
+     * @param string $name The property we want to query
+     *
+     * @return boolean TRUE if the reflection class has the property, else FALSE
+     */
+    public function hasProperty($name);
+
+    /**
+     * Returns the requested reflection property.
+     *
+     * @param string $name The name of the reflection property to return
+     *
+     * @return \TechDivision\Lang\Reflection\ReflectionProperty The requested reflection property
+     * @throws \TechDivision\Lang\Reflection\ReflectionException Is thrown if the requested property is not available
+     * @link http://php.net/manual/en/reflectionclass.getproperty.php
+     */
+    public function getProperty($name);
+
+    /**
      * Returns a new annotation instance.
      *
      * You can pass a random number of arguments to this function. These
