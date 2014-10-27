@@ -245,7 +245,8 @@ class ReflectionMethod extends Object implements MethodInterface, \Serializable
      */
     public function invoke($object)
     {
-        return $this->invokeArgs($object, func_get_args());
+        $args = func_get_args(); // load the arguments, drop the first one (because this is always the instance itself)
+        return $this->invokeArgs($object, array_splice($args, 1, 1));
     }
 
     /**

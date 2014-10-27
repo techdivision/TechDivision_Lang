@@ -38,12 +38,23 @@ use TechDivision\Lang\Object;
 class MockAnnotation extends Object
 {
 
-
+    /**
+     * Initializes the mock instance with dummy args.
+     *
+     * @param array $values The args to pass to the instance
+     */
     public function __construct(array $values = array())
     {
         $this->values = $values;
     }
 
+    /**
+     * Returns the requested value if available.
+     *
+     * @param string $key The key of the value to return
+     *
+     * @return mixed The requested value
+     */
     public function getValue($key)
     {
         if (isset($this->values[$key])) {
