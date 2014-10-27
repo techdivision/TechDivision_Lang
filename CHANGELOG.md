@@ -1,3 +1,13 @@
+# Version 0.1.9
+
+## Bugfixes
+
+* Bugfix ReflectionMethod::invoke() method to correctly pass args to method invocation
+
+## Features
+
+* None
+
 # Version 0.1.8
 
 ## Bugfixes

@@ -118,4 +118,24 @@ class ReflectionMethodTest extends \PHPUnit_Framework_TestCase
     {
         $this->reflectionMethod->getAnnotation('UnknownAnnotation');
     }
+
+    /**
+     * Test if the invoke() method passes the args correctly to the method.
+     *
+     * @return void
+     */
+    public function testInvokeWithArgs()
+    {
+
+        // initialize the array with the values
+        $values = array($key = 'test' => $value = 'aValue');
+
+        // create a new MockAnnotation instance
+        $reflectionClass = new ReflectionClass('TechDivision\Lang\Reflection\MockAnnotation');
+        $instance = $reflectionClass->newInstanceArgs(array($values));
+
+        // create the reflection method and invoke it with arguments
+        $reflectionMethod = $reflectionClass->getMethod('getValue');
+        $this->assertSame($value, $reflectionMethod->invoke($instance, $key));
+    }
 }
